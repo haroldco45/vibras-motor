@@ -294,7 +294,7 @@ footer a{color:#fff}
     </div>
     <div class="marcas-fil" id="marcasFil" role="group" aria-label="Marca"></div>
     <div class="grid" id="grid"></div>
-    <p class="credito-foto">Fotos de referencia: fichas oficiales de las marcas, Galgo Colombia y Wikimedia Commons; pueden mostrar otra versión o color. Precios de referencia según la fecha indicada en cada modelo: el precio final, los bonos y la disponibilidad los confirma el concesionario.</p>
+    <p class="credito-foto">Fotos de referencia: fichas oficiales de las marcas, Galgo Colombia, El Carro Colombiano y Wikimedia Commons; pueden mostrar otra versión o color. Precios de referencia según la fecha indicada en cada modelo: el precio final, los bonos y la disponibilidad los confirma el concesionario.</p>
   </div>
 </section>
 
@@ -395,7 +395,7 @@ footer a{color:#fff}
         <p style="margin-top:10px">Una solución de Vibras Positivas HM. Harold Augusto Marín Machado, Caucasia, Antioquia, Colombia. Atendemos clientes en todo el país y colombianos en el exterior que compran para su familia.</p>
       </div>
       <div><b style="color:#fff">Contacto</b><p style="margin-top:8px"><a id="pieWa" href="#">WhatsApp 311 770 0431</a><br><a href="https://vibraspositivashm.com" rel="noopener">vibraspositivashm.com</a></p></div>
-      <div><b style="color:#fff">Fuentes</b><p style="margin-top:8px">Andemos, ANDI–Fenalco, RUNT. Precios: sitios oficiales de AKT y Suzuki, Galgo Colombia, El Carro Colombiano, Semana, Infobae, Motor, Publimotos.</p></div>
+      <div><b style="color:#fff">Fuentes</b><p style="margin-top:8px">Andemos, ANDI–Fenalco, RUNT. Precios: sitios oficiales de AKT, Suzuki e Incolmotos Yamaha, Galgo Colombia, El Carro Colombiano, Semana, Infobae, Motor, Publimotos.</p></div>
     </div>
     <div class="legal">
       Vibras Motor es un canal de referidos independiente: no es concesionario ni representante oficial de las marcas mencionadas, cuyos nombres pertenecen a sus dueños. La venta, la factura y la garantía son del concesionario. Datos personales tratados según la Ley 1581 de 2012; la app no guarda datos de clientes.<br><br>
@@ -442,6 +442,7 @@ const CONFIG = {
     'Hero':      { red: 'Hero MotoCorp Colombia y sus concesionarios', whatsapp: '' }
   },
   demos: [
+    { t: 'Toyota bZ3X eléctrica', url: 'https://haroldco45.github.io/toyota-bz3x/' },
     { t: 'Suzuki Swift Híbrido', url: 'https://haroldco45.github.io/suzuki-swift-hibrido/' },
     { t: 'Suzuki Jimny 2027',    url: 'https://haroldco45.github.io/suzuki-jimny-2027/' },
     { t: 'Yamaha NMAX 2027',     url: 'https://haroldco45.github.io/nmax/' }
@@ -452,7 +453,7 @@ const CONFIG = {
 const MODELOS = [
   { id:'model-y', marca:'Tesla', nombre:'Model Y', tipo:'carro', verde:true, cat:'SUV eléctrica', precio:119990000, pRef:'Precio base de referencia, abril 2026', dato:'El carro más vendido de Colombia en 2026: 14.381 a septiembre', etq:'N.º 1 en ventas', wiki:'Tesla Model Y' },
   { id:'duster', marca:'Renault', nombre:'Duster', tipo:'carro', verde:false, cat:'SUV ensamblada en Colombia, también híbrida E-Tech', precio:85990000, pRef:'Desde, versión Zen 1.6 MT, octubre 2026', dato:'9.027 vendidas a septiembre; la SUV a gasolina más vendida', etq:'Hecha en Colombia', wiki:'Dacia Duster', vids:['CRCd0PAqTGA','xunLXsj39zw'] },
-  { id:'k3', marca:'Kia', nombre:'K3 Sedán y Cross', tipo:'carro', verde:false, cat:'Sedán y crossover', precio:72990000, pRef:'Desde, octubre 2026', dato:'7.707 vendidos a septiembre; líder en Córdoba', wiki:'Kia K3' },
+  { id:'k3', marca:'Kia', nombre:'K3 Sedán y Cross', tipo:'carro', verde:false, cat:'Sedán y crossover', precio:72990000, pRef:'Desde, octubre 2026', dato:'7.707 vendidos a septiembre; líder en Córdoba', wiki:'Kia K3', foto:'https://www.elcarrocolombiano.com/wp-content/uploads/2026/01/20260103-KIA-K3-PRECIOS-VERSIONES-DATOS-2026-CARRO-MAS-VENDIDO-EN-COLOMBIA-EN-2025-01-750x575.jpg' },
   { id:'cx30', marca:'Mazda', nombre:'CX-30', tipo:'carro', verde:false, cat:'SUV compacta, también híbrida ligera', precio:108150000, pRef:'Desde, octubre 2026', dato:'6.950 vendidas a septiembre; 7 airbags de serie', wiki:'Mazda CX-30' },
   { id:'picanto', marca:'Kia', nombre:'Picanto', tipo:'carro', verde:false, cat:'Hatchback urbano', precio:null, pRef:'Precio con el concesionario', dato:'6.893 vendidos a septiembre de 2026', wiki:'Kia Picanto' },
   { id:'corolla-cross', marca:'Toyota', nombre:'Corolla Cross', tipo:'carro', verde:true, cat:'SUV híbrida o a gasolina', precio:136200000, pRef:'Precio base de referencia, abril 2026', dato:'2.ª más vendida en septiembre: 1.151, +134 %', etq:'Híbrida', wiki:'Toyota Corolla Cross', vids:['CGp8aYmTxeA','lX2j8IyJQjc'] },
@@ -465,7 +466,11 @@ const MODELOS = [
   { id:'hilux', marca:'Toyota', nombre:'Hilux', tipo:'carro', verde:false, cat:'Pick-up 4x4', precio:null, pRef:'Precio con el concesionario', dato:'La pick-up más vendida de septiembre: 417, +50 %', wiki:'Toyota Hilux' },
 
   { id:'nkd', marca:'AKT', nombre:'NKD 125', tipo:'moto', verde:false, cat:'Urbana 125 cc', precio:5490000, pRef:'Precio de lista AKT, octubre 2026 (con bono: $4.990.000)', dato:'La moto más vendida del país: 7.830 en septiembre', etq:'N.º 1 en motos', wiki:null, foto:'https://images.ctfassets.net/8zlbnewncp6f/01rSgaAajayFwzCldnjEZp/00d2f071726d390729aba334163e5e5c/imagen_principal.jpg?w=900&fm=webp&q=85' },
-  { id:'nmax', marca:'Yamaha', nombre:'NMAX 155', tipo:'moto', verde:false, cat:'Scooter automática con ABS', precio:16500000, pRef:'Modelo 2026, precio de referencia', dato:'2.ª más vendida en septiembre: 5.468', wiki:'Yamaha NMAX', vids:['YB7MyLdlEmw'], app:'https://haroldco45.github.io/nmax/' },
+  { id:'nmax', marca:'Yamaha', nombre:'NMAX 155', tipo:'moto', verde:false, cat:'Scooter automática con ABS', precio:16800000, pRef:'Precio Incolmotos Yamaha, octubre 2026', dato:'2.ª más vendida en septiembre: 5.468', wiki:'Yamaha NMAX', vids:['YB7MyLdlEmw'], app:'https://haroldco45.github.io/nmax/' },
+  { id:'fz25', marca:'Yamaha', nombre:'FZ25 ABS', tipo:'moto', verde:false, cat:'Urbana 250 cc', precio:15300000, pRef:'Precio Incolmotos Yamaha, octubre 2026', dato:'249 cc, 20,6 hp, inyección y ABS adelante y atrás', etq:'250 cc', wiki:null, foto:'https://www.incolmotos-yamaha.com.co/wp-content/uploads/2019/08/fz25_azul.png' },
+  { id:'xtz250', marca:'Yamaha', nombre:'XTZ250', tipo:'moto', verde:false, cat:'Todoterreno 250 cc', precio:25900000, pRef:'Precio Incolmotos Yamaha, octubre 2026', dato:'249 cc, ABS adelante y 27 cm de despeje para la trocha', etq:'250 cc', wiki:null, foto:'https://www.incolmotos-yamaha.com.co/wp-content/uploads/2018/03/xtz250_.rojapng.png' },
+  { id:'xtz150', marca:'Yamaha', nombre:'XTZ150 ABS', tipo:'moto', verde:false, cat:'Todoterreno 150 cc', precio:14500000, pRef:'Precio Incolmotos Yamaha, octubre 2026', dato:'Modelo 2027 con ABS adelante y disco atrás', wiki:null, foto:'https://www.incolmotos-yamaha.com.co/wp-content/uploads/2019/09/xtz150_azul-ABS-1.png' },
+  { id:'mt03', marca:'Yamaha', nombre:'MT-03', tipo:'moto', verde:false, cat:'Naked de dos cilindros, 321 cc', precio:31900000, pRef:'Precio Incolmotos Yamaha, octubre 2026', dato:'41,4 hp y ABS de dos canales', wiki:null, foto:'https://www.incolmotos-yamaha.com.co/wp-content/uploads/2018/03/Mt03_2025_gris.jpg' },
   { id:'boxer', marca:'Bajaj', nombre:'Boxer CT100 ES', tipo:'moto', verde:false, cat:'De trabajo, 100 cc', precio:6199000, pRef:'Precio de referencia, octubre 2026', dato:'3.ª más vendida en septiembre: 4.517', wiki:null, foto:'https://images.ctfassets.net/8zlbnewncp6f/2gUxThd7zCg0DjXa7Dn422/5e442a53fd24fc22daff85faed883438/Bajaj_Boxer_CT100_ES_Boxer_Racing_Galeria1_Galgo.webp?w=900&fm=webp&q=85' },
   { id:'xr190', marca:'Honda', nombre:'XR190L 2.0', tipo:'moto', verde:false, cat:'Doble propósito 190 cc, ABS', precio:13900000, pRef:'Precio de referencia, octubre 2026', dato:'4.281 vendidas en septiembre de 2026', wiki:null, foto:'https://images.ctfassets.net/8zlbnewncp6f/2WLIWjsYH7i2a0th2trm0V/86a3422ab83a80b5bfda56f1d5fc3565/Honda_XR190L_2.0.png?w=900&fm=webp&q=85' },
   { id:'dr150', marca:'Suzuki', nombre:'DR150 ABS', tipo:'moto', verde:false, cat:'Doble propósito 150 cc', precio:10990000, pRef:'Precio Suzuki, octubre 2026 (financiada: $10.590.000)', dato:'3.802 en septiembre, +105 %', wiki:null, foto:'https://www.suzuki.com.co/sites/default/files/2025-12/DR-150-GRIS-1385x800.png' },
@@ -552,7 +557,7 @@ function aplicarFotos(){
     const src = m && (m.foto || FOTOS[m.wiki]);
     if (src && !box.querySelector('img')){
       const img = new Image(); img.alt = `${m.marca} ${m.nombre}`; img.loading='lazy'; img.decoding='async';
-      img.onerror = () => { box.innerHTML = fallback(m.tipo); };
+      img.onerror = () => { const w = FOTOS[m.wiki]; if (w && img.src !== w) { img.src = w; } else { img.remove(); if (!box.querySelector('.fallback')) box.insertAdjacentHTML('afterbegin', fallback(m.tipo)); } };
       img.onload = () => { box.querySelectorAll('.fallback').forEach(f=>f.remove()); };
       img.src = src; box.prepend(img);
     }

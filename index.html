@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vibras Motor · Vende carros y motos de cualquier marca</title>
+<meta name="description" content="Apps que venden carros y motos de cualquier marca en Colombia. El concesionario recibe al cliente con código de referido y paga comisión solo por venta cerrada.">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vibras Motor · Cualquier marca, desde cualquier lugar">
+<meta property="og:description" content="Carros y motos de las principales marcas de Colombia. Cotiza por WhatsApp y el concesionario te atiende.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_CO">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rojo:#EB0A1E; --rojo-osc:#B30716; --negro:#000; --blanco:#fff;
+  --acero:#58595B; --niebla:#F2F2F2; --linea:#DADADA; --wa:#1FA855;
+  --f:'Barlow',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --fc:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
+body{margin:0;font-family:var(--f);color:var(--negro);background:var(--blanco);font-size:17px;line-height:1.5;padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:3px solid var(--rojo);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--fc);line-height:1.02;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(34px,6vw,56px);font-weight:800}
+h3{font-size:24px;font-weight:700}
+p{margin:0 0 1em;max-width:62ch}
+.sec{padding:72px 0}
+.sec-gris{background:var(--niebla)}
+.lead{font-size:19px;color:var(--acero)}
+
+/* barra superior */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--blanco);border-bottom:1px solid var(--linea)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;height:60px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none}
+.marca b{white-space:nowrap;font-family:var(--fc);font-size:26px;font-weight:800;letter-spacing:-.01em}
+.marca small{display:block;font-size:12px;color:var(--acero);line-height:1;margin-top:-2px}
+.logo-dot{width:30px;height:30px;border-radius:50%;background:var(--rojo);display:grid;place-items:center}
+.logo-dot svg{width:18px;height:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:14px 26px;font-weight:600;font-size:16px;cursor:pointer;text-decoration:none;transition:background .15s}
+.btn-rojo{background:var(--rojo);color:#fff}.btn-rojo:hover{background:var(--rojo-osc)}
+.btn-negro{background:#000;color:#fff}
+.btn-borde{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-sm{padding:9px 16px;font-size:14px}
+
+/* hero */
+.hero{position:relative;background:#000;color:#fff;overflow:hidden}
+.tira{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr)}
+.tira figure{margin:0;position:relative;overflow:hidden;background:#1d1d1d}
+.tira img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s}
+.tira img.ok{opacity:.55}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.55) 45%,#000 100%)}
+.hero .wrap{position:relative;z-index:2;padding-top:110px;padding-bottom:56px}
+.hero h1{font-size:clamp(46px,9.5vw,112px);font-weight:800;max-width:11ch}
+.hero .sub{font-size:clamp(18px,2.4vw,22px);color:#e6e6e6;max-width:46ch;margin:22px 0 30px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero .btn-borde{color:#fff}
+.hechos{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#333;margin-top:56px;border-top:3px solid var(--rojo)}
+.hechos div{background:#000;padding:18px 16px 4px}
+.hechos strong{font-family:var(--fc);font-size:clamp(30px,5vw,46px);font-weight:800;display:block;line-height:1}
+.hechos span{font-size:14px;color:#bdbdbd;display:block;margin-top:6px}
+.fuente{font-size:12.5px;color:#9a9a9a;margin-top:12px}
+
+/* cómo funciona */
+.pasos{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:40px;counter-reset:p}
+.paso{border-top:2px solid #000;padding-top:16px}
+.paso::before{counter-increment:p;content:counter(p);font-family:var(--fc);font-size:56px;font-weight:800;color:var(--rojo);line-height:1;display:block;margin-bottom:8px}
+.paso p{font-size:16px;color:var(--acero)}
+.demo-wa{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:56px}
+.telefono{background:#E5DDD5;border-radius:28px;padding:18px;max-width:380px;justify-self:center;width:100%;border:10px solid #000}
+.telefono .cab{background:#075E54;color:#fff;margin:-18px -18px 14px;padding:12px 16px;border-radius:16px 16px 0 0;font-weight:600;font-size:15px}
+.burbuja{background:#DCF8C6;border-radius:10px 0 10px 10px;padding:10px 12px;font-size:14px;line-height:1.45;white-space:pre-line;margin-left:24px;box-shadow:0 1px 1px rgba(0,0,0,.15)}
+.burbuja small{display:block;text-align:right;color:#6b6b6b;font-size:11px;margin-top:4px}
+
+/* catálogo */
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 12px}
+.chip{border:1.5px solid #000;background:#fff;border-radius:999px;padding:8px 16px;font-weight:600;font-size:15px;cursor:pointer}
+.chip[aria-pressed="true"]{background:#000;color:#fff}
+.marcas-fil{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.marcas-fil .chip{border-color:var(--linea);font-weight:500;white-space:nowrap}
+.marcas-fil .chip[aria-pressed="true"]{background:var(--rojo);border-color:var(--rojo);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-top:22px}
+.card{background:#fff;border:1px solid var(--linea);display:flex;flex-direction:column}
+.card .foto{aspect-ratio:16/10;background:var(--niebla);position:relative;overflow:hidden}
+.card .foto img{width:100%;height:100%;object-fit:cover}
+.etq{position:absolute;left:0;top:12px;background:var(--rojo);color:#fff;font-size:13px;font-weight:600;padding:4px 10px}
+.card .cuerpo{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
+.card .mar{font-size:14px;color:var(--acero);font-weight:500}
+.card h3{font-size:28px;margin:2px 0 6px}
+.card .tipo{font-size:14px;color:var(--acero)}
+.precio{font-family:var(--fc);font-size:26px;font-weight:700;margin:12px 0 0}
+.precio small{display:block;font-family:var(--f);font-size:12.5px;font-weight:400;color:var(--acero)}
+.card .dato{font-size:14px;border-top:1px solid var(--linea);margin-top:12px;padding-top:10px}
+.card .acc{display:flex;gap:8px;margin-top:auto;padding-top:16px}
+.card .acc .btn{flex:1;padding:11px 10px;font-size:15px}
+.vacio{padding:40px 0;color:var(--acero)}
+.fallback{width:100%;height:100%;display:grid;place-items:center;background:linear-gradient(160deg,#ececec,#d9d9d9)}
+.fallback svg{width:62%;opacity:.55}
+.credito-foto{font-size:12.5px;color:var(--acero);margin-top:18px}
+
+/* mercado */
+.toggle{display:inline-flex;border:2px solid #000;border-radius:999px;overflow:hidden;margin:24px 0}
+.toggle button{border:0;background:#fff;padding:9px 22px;font-weight:600;cursor:pointer}
+.toggle button[aria-pressed="true"]{background:#000;color:#fff}
+.barras{display:grid;gap:12px;max-width:760px}
+.barra{display:grid;grid-template-columns:110px 1fr 90px;gap:12px;align-items:center;font-size:15px}
+.barra .b{height:26px;background:#000;transform-origin:left;transition:width .6s}
+.barra:first-child .b{background:var(--rojo)}
+.barra .n{font-family:var(--fc);font-weight:700;font-size:19px;text-align:right}
+.mer-res{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:40px}
+.mer-res div{border-left:3px solid var(--rojo);padding-left:14px}
+.mer-res strong{font-family:var(--fc);font-size:34px;display:block;line-height:1.05}
+.mer-res span{font-size:15px;color:var(--acero)}
+
+/* videos */
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;margin-top:32px}
+.vid{background:#000;aspect-ratio:16/9;position:relative;cursor:pointer;border:0;padding:0;width:100%;overflow:hidden}
+.vid img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.vid .play{position:absolute;inset:0;display:grid;place-items:center}
+.vid .play span{width:68px;height:48px;background:var(--rojo);border-radius:12px;display:grid;place-items:center}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid-t{font-weight:600;font-size:15px;margin-top:8px}
+
+/* comisión */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px;align-items:start}
+.campo{margin-bottom:22px}
+.campo label{display:block;font-weight:600;margin-bottom:6px}
+.campo select,.campo input[type=number],.campo input[type=text],.campo input[type=tel]{width:100%;padding:13px 14px;border:1.5px solid #bdbdbd;border-radius:6px;background:#fff;font-size:16px}
+.campo input[type=range]{width:100%;accent-color:var(--rojo)}
+.res{background:#000;color:#fff;padding:28px}
+.res .big{font-family:var(--fc);font-size:clamp(44px,7vw,68px);font-weight:800;line-height:1}
+.res .mini{color:#bdbdbd;font-size:15px}
+.res hr{border:0;border-top:1px solid #333;margin:20px 0}
+.nota{font-size:13px;color:var(--acero)}
+.res .nota{color:#9a9a9a}
+
+/* aliados */
+.prop{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px}
+.prop div{border-top:2px solid #000;padding-top:14px}
+.prop p{font-size:16px;color:var(--acero)}
+.demos{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
+.form-aliado{max-width:620px;margin-top:44px;background:#fff;padding:28px;border:1px solid var(--linea)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--acero);margin:6px 0 18px}
+.consent input{margin-top:4px;accent-color:var(--rojo);width:18px;height:18px;flex:none}
+
+/* hoja de cotización */
+dialog{border:0;padding:0;width:min(560px,100%);max-height:92vh;border-radius:16px 16px 0 0;margin:auto auto 0}
+@media(min-width:700px){dialog{border-radius:12px;margin:auto}}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+.hoja{padding:24px 22px calc(24px + env(safe-area-inset-bottom,0px));overflow-y:auto;max-height:92vh}
+.hoja-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
+.cerrar{border:0;background:var(--niebla);width:38px;height:38px;border-radius:50%;font-size:22px;cursor:pointer;flex:none}
+.hoja .resumen{display:flex;gap:14px;align-items:center;background:var(--niebla);padding:12px;margin-bottom:18px}
+.hoja .resumen .mini-foto{width:96px;aspect-ratio:16/10;background:#ddd;flex:none;overflow:hidden}
+.hoja .resumen .mini-foto img{width:100%;height:100%;object-fit:cover}
+.pagos{display:flex;gap:8px;flex-wrap:wrap}
+.pagos label{border:1.5px solid #bdbdbd;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:15px}
+.pagos input{position:absolute;opacity:0;pointer-events:none}
+.pagos input:checked+span{font-weight:700}
+.pagos label:has(input:checked){border-color:#000;background:#000;color:#fff}
+.codigo{font-family:var(--fc);font-size:clamp(24px,7vw,34px);white-space:nowrap;font-weight:800;letter-spacing:.02em;background:var(--niebla);padding:10px 14px;display:inline-block;margin:8px 0 16px}
+.err{color:var(--rojo);font-size:14px;min-height:20px}
+.hoja .vid{margin-bottom:6px}
+
+/* pie y barra inferior */
+footer{background:#000;color:#cfcfcf;padding:48px 0 30px;font-size:14px}
+footer h3{color:#fff;font-size:26px}
+footer a{color:#fff}
+.pie-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}
+.legal{border-top:1px solid #333;margin-top:30px;padding-top:18px;font-size:12.5px;color:#9a9a9a}
+.nav-ab{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:1px solid var(--linea);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav-ab a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 2px 8px;font-size:11.5px;font-weight:600;text-decoration:none;color:var(--acero)}
+.nav-ab a svg{width:22px;height:22px}
+.nav-ab a.act{color:var(--rojo)}
+
+@media(max-width:860px){
+  .pasos{grid-template-columns:1fr 1fr}
+  .demo-wa,.calc{grid-template-columns:1fr}
+  .prop{grid-template-columns:1fr}
+  .pie-grid{grid-template-columns:1fr}
+  .tira{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  body{font-size:16px}
+  .sec{padding:56px 0}
+  .pasos{grid-template-columns:1fr}
+  .hechos{grid-template-columns:1fr}
+  .hero .wrap{padding-top:80px}
+  .barra{grid-template-columns:84px 1fr 74px;font-size:14px}
+  .marca small{display:none}
+  .marca b{font-size:22px}
+  .top .btn-sm{padding:8px 12px;font-size:13px;white-space:nowrap}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Vibras Motor, inicio">
+      <span class="logo-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#fff"><path d="M5 15.5 7 10a2 2 0 0 1 1.9-1.3h6.2A2 2 0 0 1 17 10l2 5.5V19a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H8v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1zm3-2.5h8l-1-2.7H9zm-.5 3.8a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4m9 0a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4"/></svg></span>
+      <span><b>Vibras Motor</b><small>por Vibras Positivas HM</small></span>
+    </a>
+    <a class="btn btn-negro btn-sm" href="#aliados">Soy concesionario</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="tira" aria-hidden="true">
+    <figure><img data-wiki="Toyota Corolla Cross" alt=""></figure>
+    <figure><img data-wiki="Yamaha NMAX" alt=""></figure>
+    <figure><img data-wiki="Dacia Duster" alt=""></figure>
+    <figure><img data-wiki="Kia Sportage" alt=""></figure>
+  </div>
+  <div class="wrap">
+    <h1>Cualquier marca. Desde cualquier lugar.</h1>
+    <p class="sub">Escoge tu carro o tu moto aquí y te conecto directo con el concesionario oficial por WhatsApp. Tú compras al precio de vitrina; el concesionario recibe un cliente listo para cerrar.</p>
+    <div class="ctas">
+      <a class="btn btn-rojo" href="#catalogo">Ver carros y motos</a>
+      <a class="btn btn-borde" href="#como">Cómo funciona</a>
+    </div>
+    <div class="hechos">
+      <div><strong>247.212</strong><span>carros nuevos matriculados en Colombia, enero a septiembre de 2026 (+41,2 %)</span></div>
+      <div><strong>1.026.136</strong><span>motos nuevas matriculadas en el mismo periodo (+28,3 %)</span></div>
+      <div><strong>33.890</strong><span>carros vendidos solo en septiembre: el mejor mes en 12 años</span></div>
+    </div>
+    <p class="fuente">Fuente: Andemos y Cámara de Motocicletas ANDI–Fenalco con datos del RUNT, informes publicados el 1 y 2 de octubre de 2026.</p>
+  </div>
+</section>
+
+<section class="sec" id="como">
+  <div class="wrap">
+    <h2>Así se vende un vehículo con mi app</h2>
+    <p class="lead">Yo pongo la vitrina digital y traigo al cliente. El concesionario pone el carro, el asesor y la factura. Nadie paga nada por adelantado.</p>
+    <div class="pasos">
+      <div class="paso"><h3>El cliente escoge</h3><p>Ve fotos, precios, videos y datos reales del modelo en su celular, desde Caucasia, Medellín, Madrid o Miami.</p></div>
+      <div class="paso"><h3>El concesionario recibe el aviso</h3><p>Un WhatsApp llega al asesor con el nombre, la ciudad, el modelo y un código de referido único de Vibras Motor.</p></div>
+      <div class="paso"><h3>El asesor cierra la venta</h3><p>El concesionario atiende, hace la prueba de manejo, el crédito y la entrega como siempre.</p></div>
+      <div class="paso"><h3>Se paga la comisión</h3><p>Con la factura del vehículo vendido con ese código, el concesionario paga la comisión acordada.</p></div>
+    </div>
+
+    <div class="demo-wa">
+      <div>
+        <h3>Esto es lo que recibe el concesionario</h3>
+        <p style="margin-top:12px">Cada contacto sale con un código como <b>VM-TOY-261003-4821</b>: marca, fecha en hora de Colombia y un número único. Con ese código el asesor sabe que el cliente llegó por mi app, y yo puedo demostrar cada venta que generé.</p>
+        <p>El mensaje sale del celular del cliente, así que el asesor le responde a él directamente. A mí me llega una copia con el mismo código para llevar el registro.</p>
+        <a class="btn btn-rojo" href="#catalogo">Probar con un modelo</a>
+      </div>
+      <div class="telefono" aria-label="Ejemplo del mensaje de WhatsApp que recibe el concesionario">
+        <div class="cab">Cliente nuevo · WhatsApp</div>
+        <div class="burbuja" id="burbujaDemo"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-gris" id="catalogo">
+  <div class="wrap">
+    <h2>Carros y motos de las marcas que más vende Colombia</h2>
+    <p class="lead">Los modelos líderes de 2026 con su precio de referencia. Toca «Lo quiero» y te contacta el concesionario.</p>
+    <div class="filtros" role="group" aria-label="Tipo de vehículo">
+      <button class="chip" data-tipo="todos" aria-pressed="true">Todos</button>
+      <button class="chip" data-tipo="carro" aria-pressed="false">Carros</button>
+      <button class="chip" data-tipo="moto" aria-pressed="false">Motos</button>
+      <button class="chip" data-tipo="verde" aria-pressed="false">Eléctricos e híbridos</button>
+    </div>
+    <div class="marcas-fil" id="marcasFil" role="group" aria-label="Marca"></div>
+    <div class="grid" id="grid"></div>
+    <p class="credito-foto">Fotos de referencia: Wikimedia Commons, con licencias libres; pueden mostrar otra versión o mercado. Precios de referencia según la fecha indicada en cada modelo: el precio final, los bonos y la disponibilidad los confirma el concesionario.</p>
+  </div>
+</section>
+
+<section class="sec" id="mercado">
+  <div class="wrap">
+    <h2>Un mercado que no para de crecer</h2>
+    <p class="lead">Unidades matriculadas de enero a septiembre de 2026. Estas son las marcas que la app pone al alcance de cualquier cliente.</p>
+    <div class="toggle" role="group" aria-label="Ver mercado de">
+      <button data-m="carros" aria-pressed="true">Carros</button>
+      <button data-m="motos" aria-pressed="false">Motos</button>
+    </div>
+    <div class="barras" id="barras"></div>
+    <div class="mer-res">
+      <div><strong>Más de 50 %</strong><span>de los carros vendidos en septiembre fueron eléctricos o híbridos.</span></div>
+      <div><strong>127.098</strong><span>motos nuevas en septiembre de 2026, con Suzuki de primera.</span></div>
+      <div><strong>Tesla Model Y</strong><span>el carro más vendido del año: 14.381 unidades a septiembre.</span></div>
+    </div>
+    <p class="fuente" id="fuenteMer" style="color:var(--acero)"></p>
+  </div>
+</section>
+
+<section class="sec sec-gris" id="videos">
+  <div class="wrap">
+    <h2>Míralos en movimiento</h2>
+    <p class="lead">Reseñas reales hechas en Colombia. El video carga solo cuando lo tocas, para cuidar tus datos.</p>
+    <div class="vids" id="vids"></div>
+  </div>
+</section>
+
+<section class="sec" id="comision">
+  <div class="wrap">
+    <h2>El concesionario solo paga cuando vende</h2>
+    <p class="lead">Sin mensualidad, sin pauta, sin costo por contacto. La comisión sale de una venta que ya se hizo.</p>
+    <div class="calc">
+      <div>
+        <div class="campo">
+          <label for="cMod">Vehículo</label>
+          <select id="cMod"></select>
+        </div>
+        <div class="campo">
+          <label for="cPrecio">Precio de venta (COP)</label>
+          <input type="number" id="cPrecio" inputmode="numeric" min="0" step="10000">
+        </div>
+        <div class="campo">
+          <label for="cPct">Comisión acordada: <span id="cPctV"></span></label>
+          <input type="range" id="cPct" min="0.25" max="3" step="0.25">
+        </div>
+        <div class="campo">
+          <label for="cN">Vehículos vendidos al mes con la app: <span id="cNV"></span></label>
+          <input type="range" id="cN" min="1" max="30" step="1" value="4">
+        </div>
+      </div>
+      <div class="res" aria-live="polite">
+        <div class="mini">Comisión por vehículo vendido</div>
+        <div class="big" id="rUno">$0</div>
+        <hr>
+        <div class="mini">Al mes, con <span id="rN"></span> ventas</div>
+        <div class="big" style="font-size:clamp(34px,5vw,48px)" id="rMes">$0</div>
+        <hr>
+        <p class="nota">El porcentaje de la calculadora es un ejemplo para conversar: la comisión real se pacta por escrito con cada concesionario, por marca y por tipo de vehículo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-gris" id="aliados">
+  <div class="wrap">
+    <h2>Para concesionarios y fábricas</h2>
+    <p class="lead">Le propongo a su marca un vendedor digital que trabaja las 24 horas, desde donde yo esté y para el modelo que usted quiera mover.</p>
+    <div class="prop">
+      <div><h3>Su WhatsApp en la app</h3><p>Pongo el número de su asesor en sus modelos. Cada cliente le llega directo, con su nombre, ciudad, forma de pago y código de referido.</p></div>
+      <div><h3>Una app por modelo</h3><p>Hago apps estilo Toyota para el modelo que usted elija: versiones, ficha técnica, simulador de cuota y prueba de manejo por WhatsApp.</p></div>
+      <div><h3>Comisión por venta cerrada</h3><p>Usted no arriesga nada. Si el cliente con mi código compra, me paga la comisión pactada. Si no compra, no me debe nada.</p></div>
+    </div>
+    <p style="margin-top:30px"><b>Ejemplos de apps que ya hice:</b></p>
+    <div class="demos" id="demos"></div>
+
+    <form class="form-aliado" id="formAliado" novalidate>
+      <h3>Quiero a Vibras Motor vendiendo mis vehículos</h3>
+      <p class="nota" style="margin:6px 0 20px">Le escribo por WhatsApp para mostrarle la app funcionando con sus modelos.</p>
+      <div class="campo"><label for="aEmp">Concesionario o empresa</label><input type="text" id="aEmp" required autocomplete="organization"></div>
+      <div class="campo"><label for="aMarca">Marca o marcas que vende</label><input type="text" id="aMarca" required></div>
+      <div class="campo"><label for="aNom">Su nombre y cargo</label><input type="text" id="aNom" required autocomplete="name"></div>
+      <div class="campo"><label for="aCiu">Ciudad</label><input type="text" id="aCiu" required autocomplete="address-level2"></div>
+      <label class="consent"><input type="checkbox" id="aOk" required><span>Autorizo a Vibras Positivas HM a usar estos datos solo para contactarme sobre esta propuesta, según la Ley 1581 de 2012. Los datos no se guardan en la app: viajan en el mensaje de WhatsApp.</span></label>
+      <p class="err" id="aErr" role="alert"></p>
+      <button class="btn btn-wa" type="submit">Enviar a Harold por WhatsApp</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="pie-grid">
+      <div>
+        <h3>Vibras Motor</h3>
+        <p style="margin-top:10px">Una solución de Vibras Positivas HM. Harold Augusto Marín Machado, Caucasia, Antioquia, Colombia. Atendemos clientes en todo el país y colombianos en el exterior que compran para su familia.</p>
+      </div>
+      <div><b style="color:#fff">Contacto</b><p style="margin-top:8px"><a id="pieWa" href="#">WhatsApp 311 770 0431</a><br><a href="https://vibraspositivashm.com" rel="noopener">vibraspositivashm.com</a></p></div>
+      <div><b style="color:#fff">Fuentes</b><p style="margin-top:8px">Andemos, ANDI–Fenalco, RUNT. Precios: El Carro Colombiano, Semana, Infobae, Motor, El Espectador, Cambio, Publimotos.</p></div>
+    </div>
+    <div class="legal">
+      Vibras Motor es un canal de referidos independiente: no es concesionario ni representante oficial de las marcas mencionadas, cuyos nombres pertenecen a sus dueños. La venta, la factura y la garantía son del concesionario. Datos personales tratados según la Ley 1581 de 2012; la app no guarda datos de clientes.<br><br>
+      Desarrollada por Vibras Positivas HM — Derechos de Autor Reservados. Actualizada el <span id="fechaAct"></span>.
+    </div>
+  </div>
+</footer>
+
+<nav class="nav-ab" aria-label="Secciones">
+  <a href="#inicio" class="act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11 12 4l9 7v9H5v-9"/></svg>Inicio</a>
+  <a href="#catalogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="8" height="7"/><rect x="13" y="4" width="8" height="7"/><rect x="3" y="13" width="8" height="7"/><rect x="13" y="13" width="8" height="7"/></svg>Catálogo</a>
+  <a href="#como"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h12M12 6l6 6-6 6"/></svg>Cómo va</a>
+  <a href="#comision"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.5c-.5-1-1.4-1.5-2.5-1.5-1.5 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1 2-2.5 2c-1.2 0-2.1-.5-2.6-1.6M12 6.5V8m0 8v1.5"/></svg>Comisión</a>
+  <a href="#aliados"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V9l9-5 9 5v12M8 21v-6h8v6"/></svg>Aliados</a>
+</nav>
+
+<dialog id="hoja" aria-labelledby="hTit">
+  <div class="hoja" id="hojaIn"></div>
+</dialog>
+
+<script>
+/* ============ CONFIG: lo que Harold edita ============ */
+const CONFIG = {
+  harold: { nombre: 'Harold Marín', whatsapp: '573117700431' },
+  comisionEjemplo: 1,           // % que muestra la calculadora al abrir (ejemplo)
+  actualizado: '3 de octubre de 2026',
+  /* WhatsApp del asesor de cada marca, con 57 adelante (ej. '573001234567').
+     Vacío = el contacto le llega a Harold, que lo pasa al concesionario. */
+  marcas: {
+    'Toyota':    { red: 'Toyota de Colombia y su red de concesionarios', whatsapp: '' },
+    'Renault':   { red: 'Renault-Sofasa y su red de concesionarios', whatsapp: '' },
+    'Kia':       { red: 'Metrokia y su red de concesionarios', whatsapp: '' },
+    'Mazda':     { red: 'Mazda de Colombia y su red de concesionarios', whatsapp: '' },
+    'Chevrolet': { red: 'GM Colmotores y su red de concesionarios', whatsapp: '' },
+    'Tesla':     { red: 'Tesla vende directo en su tienda y en línea', whatsapp: '' },
+    'BYD':       { red: 'BYD Auto Colombia y sus concesionarios', whatsapp: '' },
+    'Hyundai':   { red: 'Hyundai Colombia y su red de concesionarios', whatsapp: '' },
+    'Ford':      { red: 'Ford Colombia y su red de concesionarios', whatsapp: '' },
+    'Suzuki':    { red: 'Suzuki Motor de Colombia y sus concesionarios', whatsapp: '' },
+    'AKT':       { red: 'AKT Motos y su red de almacenes', whatsapp: '' },
+    'Yamaha':    { red: 'Incolmotos Yamaha y su red de concesionarios', whatsapp: '' },
+    'Bajaj':     { red: 'Grupo UMA y su red de concesionarios', whatsapp: '' },
+    'Honda':     { red: 'Fanalca (Honda motos) y su red de concesionarios', whatsapp: '' },
+    'Hero':      { red: 'Hero MotoCorp Colombia y sus concesionarios', whatsapp: '' }
+  },
+  demos: [
+    { t: 'Suzuki Swift Híbrido', url: 'https://haroldco45.github.io/suzuki-swift-hibrido/' },
+    { t: 'Suzuki Jimny 2027',    url: 'https://haroldco45.github.io/suzuki-jimny-2027/' },
+    { t: 'Yamaha NMAX 2027',     url: 'https://haroldco45.github.io/nmax/' }
+  ]
+};
+
+/* ============ MODELOS (precios de referencia con fecha) ============ */
+const MODELOS = [
+  { id:'model-y', marca:'Tesla', nombre:'Model Y', tipo:'carro', verde:true, cat:'SUV eléctrica', precio:119990000, pRef:'Precio base de referencia, abril 2026', dato:'El carro más vendido de Colombia en 2026: 14.381 a septiembre', etq:'N.º 1 en ventas', wiki:'Tesla Model Y' },
+  { id:'duster', marca:'Renault', nombre:'Duster', tipo:'carro', verde:false, cat:'SUV ensamblada en Colombia, también híbrida E-Tech', precio:85990000, pRef:'Desde, versión Zen 1.6 MT, octubre 2026', dato:'9.027 vendidas a septiembre; la SUV a gasolina más vendida', etq:'Hecha en Colombia', wiki:'Dacia Duster', vids:['CRCd0PAqTGA','xunLXsj39zw'] },
+  { id:'k3', marca:'Kia', nombre:'K3 Sedán y Cross', tipo:'carro', verde:false, cat:'Sedán y crossover', precio:72990000, pRef:'Desde, octubre 2026', dato:'7.707 vendidos a septiembre; líder en Córdoba', wiki:'Kia K3' },
+  { id:'cx30', marca:'Mazda', nombre:'CX-30', tipo:'carro', verde:false, cat:'SUV compacta, también híbrida ligera', precio:108150000, pRef:'Desde, octubre 2026', dato:'6.950 vendidas a septiembre; 7 airbags de serie', wiki:'Mazda CX-30' },
+  { id:'picanto', marca:'Kia', nombre:'Picanto', tipo:'carro', verde:false, cat:'Hatchback urbano', precio:null, pRef:'Precio con el concesionario', dato:'6.893 vendidos a septiembre de 2026', wiki:'Kia Picanto' },
+  { id:'corolla-cross', marca:'Toyota', nombre:'Corolla Cross', tipo:'carro', verde:true, cat:'SUV híbrida o a gasolina', precio:136200000, pRef:'Precio base de referencia, abril 2026', dato:'2.ª más vendida en septiembre: 1.151, +134 %', etq:'Híbrida', wiki:'Toyota Corolla Cross', vids:['CGp8aYmTxeA','lX2j8IyJQjc'] },
+  { id:'sportage', marca:'Kia', nombre:'Sportage', tipo:'carro', verde:true, cat:'SUV mediana, también híbrida', precio:128990000, pRef:'Precio base de referencia, abril 2026', dato:'5.212 vendidas a septiembre de 2026', wiki:'Kia Sportage' },
+  { id:'yuan-up', marca:'BYD', nombre:'Yuan Up', tipo:'carro', verde:true, cat:'SUV eléctrica e híbrida enchufable DM-i', precio:105000000, pRef:'Eléctrica desde, julio 2026 (DM-i: $119.990.000)', dato:'4.442 vendidas a septiembre; DM-i con 1.100 km de autonomía', etq:'Eléctrica', wiki:'BYD Atto 2' },
+  { id:'onix', marca:'Chevrolet', nombre:'Onix', tipo:'carro', verde:false, cat:'Sedán y hatchback turbo', precio:75790000, pRef:'Precio base de referencia, abril 2026', dato:'884 vendidos en septiembre, +16 %', wiki:'Chevrolet Onix' },
+  { id:'kona', marca:'Hyundai', nombre:'Kona', tipo:'carro', verde:true, cat:'SUV compacta, también híbrida y eléctrica', precio:null, pRef:'Precio con el concesionario', dato:'3.851 vendidas a septiembre de 2026', wiki:'Hyundai Kona' },
+  { id:'territory', marca:'Ford', nombre:'Territory', tipo:'carro', verde:true, cat:'SUV, también híbrida', precio:null, pRef:'Precio con el concesionario', dato:'3.427 vendidas a septiembre de 2026', wiki:'Ford Territory (China)' },
+  { id:'swift', marca:'Suzuki', nombre:'Swift Híbrido', tipo:'carro', verde:true, cat:'Hatchback híbrido ligero', precio:65990000, pRef:'Desde, versión GL (GLX $77.990.000)', dato:'Suzuki: 1.842 carros vendidos en septiembre, +12 %', etq:'Híbrido', wiki:'Suzuki Swift', app:'https://haroldco45.github.io/suzuki-swift-hibrido/' },
+  { id:'hilux', marca:'Toyota', nombre:'Hilux', tipo:'carro', verde:false, cat:'Pick-up 4x4', precio:null, pRef:'Precio con el concesionario', dato:'La pick-up más vendida de septiembre: 417, +50 %', wiki:'Toyota Hilux' },
+
+  { id:'nkd', marca:'AKT', nombre:'NKD 125', tipo:'moto', verde:false, cat:'Urbana 125 cc', precio:5490000, pRef:'Precio de referencia, febrero 2026', dato:'La moto más vendida del país: 7.830 en septiembre', etq:'N.º 1 en motos', wiki:null },
+  { id:'nmax', marca:'Yamaha', nombre:'NMAX 155', tipo:'moto', verde:false, cat:'Scooter automática con ABS', precio:16500000, pRef:'Modelo 2026, precio de referencia', dato:'2.ª más vendida en septiembre: 5.468', wiki:'Yamaha NMAX', vids:['YB7MyLdlEmw'], app:'https://haroldco45.github.io/nmax/' },
+  { id:'boxer', marca:'Bajaj', nombre:'Boxer CT100 ES', tipo:'moto', verde:false, cat:'De trabajo, 100 cc', precio:6100000, pRef:'Precio aproximado, abril 2026', dato:'3.ª más vendida en septiembre: 4.517', wiki:'Bajaj Boxer' },
+  { id:'xr190', marca:'Honda', nombre:'XR190L 2.0', tipo:'moto', verde:false, cat:'Doble propósito 190 cc', precio:null, pRef:'Precio con el concesionario', dato:'4.281 vendidas en septiembre de 2026', wiki:null },
+  { id:'dr150', marca:'Suzuki', nombre:'DR150 ABS', tipo:'moto', verde:false, cat:'Doble propósito 150 cc', precio:null, pRef:'Precio con el concesionario', dato:'3.802 en septiembre, +105 %', wiki:null },
+  { id:'gn125', marca:'Suzuki', nombre:'GN125 ABS', tipo:'moto', verde:false, cat:'Clásica 125 cc', precio:null, pRef:'Precio con el concesionario', dato:'3.745 en septiembre, +173 %', wiki:'Suzuki GN125' },
+  { id:'xr150', marca:'Honda', nombre:'XR150L 2.0', tipo:'moto', verde:false, cat:'Doble propósito 150 cc', precio:null, pRef:'Precio con el concesionario', dato:'3.822 vendidas en septiembre de 2026', wiki:null },
+  { id:'hunk', marca:'Hero', nombre:'Hunk 125R', tipo:'moto', verde:false, cat:'Urbana deportiva 125 cc', precio:null, pRef:'Precio con el concesionario', dato:'Entre las 10 más vendidas de abril de 2026', wiki:null }
+];
+
+const MERCADO = {
+  carros: { fuente:'Carros: Andemos / ANDI–Fenalco, acumulado enero–septiembre de 2026.',
+    datos:[['Kia',31991],['Renault',24441],['Toyota',22466],['Chevrolet',18380],['Mazda',17280]] },
+  motos: { fuente:'Motos: Cámara de la Industria de Motocicletas ANDI–Fenalco con datos del RUNT, acumulado enero–septiembre de 2026. AKT calculado con el total de las tres primeras marcas (481.714).',
+    datos:[['Bajaj',175087],['Suzuki',158458],['AKT',148169],['Honda',146987],['Yamaha',133165],['Hero',80812],['TVS',79034]] }
+};
+
+const VIDEOS = [
+  { id:'CRCd0PAqTGA', t:'Renault Duster Hybrid E-Tech 2026 en Colombia' },
+  { id:'CGp8aYmTxeA', t:'Toyota Corolla Cross 2026 Híbrido' },
+  { id:'xunLXsj39zw', t:'Renault Duster Iconic 4WD 2026 · NetU Autos' },
+  { id:'lX2j8IyJQjc', t:'Toyota Corolla Cross Hybrid SEG · NetU Autos' },
+  { id:'YB7MyLdlEmw', t:'Yamaha NMAX 155 2026: detalles y puntos a tener en cuenta' }
+];
+
+/* ============ utilidades ============ */
+const $ = s => document.querySelector(s);
+const pesos = n => '$' + new Intl.NumberFormat('es-CO').format(Math.round(n));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SIL_CARRO = '<svg viewBox="0 0 120 50" fill="#58595B"><path d="M10 34c0-4 2-6 6-7l14-3 14-11c3-2 6-3 10-3h22c4 0 7 1 10 4l10 10 12 2c4 1 6 3 6 7v4H10z"/><circle cx="32" cy="40" r="8" fill="#fff" stroke="#58595B" stroke-width="5"/><circle cx="92" cy="40" r="8" fill="#fff" stroke="#58595B" stroke-width="5"/></svg>';
+const SIL_MOTO = '<svg viewBox="0 0 120 60" fill="none" stroke="#58595B" stroke-width="6" stroke-linecap="round"><circle cx="25" cy="42" r="13"/><circle cx="95" cy="42" r="13"/><path d="M25 42l22-16h22l12 16M47 26l-6-10h10M69 26l14-14h10M83 12l12 30"/></svg>';
+const fallback = tipo => `<div class="fallback">${tipo==='moto'?SIL_MOTO:SIL_CARRO}</div>`;
+
+function horaBogota(){
+  const p = new Intl.DateTimeFormat('es-CO',{timeZone:'America/Bogota',year:'2-digit',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  const g = t => (p.find(x=>x.type===t)||{}).value;
+  return { codigo: g('year')+g('month')+g('day'), texto: `${g('day')}/${g('month')}/20${g('year')} ${g('hour')}:${g('minute')} (hora Colombia)` };
+}
+function codigoReferido(marca){
+  const pref = marca.normalize('NFD').replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase();
+  const n = crypto.getRandomValues(new Uint16Array(1))[0] % 9000 + 1000;
+  return `VM-${pref}-${horaBogota().codigo}-${n}`;
+}
+const waDe = marca => (CONFIG.marcas[marca] && CONFIG.marcas[marca].whatsapp) || CONFIG.harold.whatsapp;
+const waLink = (num, txt) => `https://wa.me/${num}?text=${encodeURIComponent(txt)}`;
+
+function mensajeConcesionario(m, d, cod){
+  return `🚗 *Cliente referido por Vibras Motor*\n` +
+    `Código de referido: *${cod}*\n\n` +
+    `Vehículo: ${m.marca} ${m.nombre}\n` +
+    `Cliente: ${d.nombre}\nCiudad: ${d.ciudad}\nCelular: ${d.cel}\nForma de pago: ${d.pago}\n` +
+    (d.nota ? `Comentario: ${d.nota}\n` : '') +
+    `Fecha: ${horaBogota().texto}\n\n` +
+    `Hola, vi este vehículo en la app Vibras Motor de Vibras Positivas HM y quiero que me atiendan. ` +
+    `Al asesor: este cliente llega con el código de arriba; si se cierra la venta aplica la comisión acordada con Vibras Positivas HM (Harold Marín, ${CONFIG.harold.whatsapp.replace(/^57/,'')}).`;
+}
+
+/* ============ fotos desde Wikimedia (una sola consulta) ============ */
+const FOTOS = {};
+async function cargarFotos(){
+  try { Object.assign(FOTOS, JSON.parse(localStorage.getItem('vm-fotos')||'{}')); } catch(e){}
+  aplicarFotos();
+  const titulos = [...new Set([...MODELOS.map(m=>m.wiki), ...[...document.querySelectorAll('img[data-wiki]')].map(i=>i.dataset.wiki)].filter(Boolean))];
+  const faltan = titulos.filter(t => !FOTOS[t]);
+  if (!faltan.length) return;
+  try {
+    const url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=thumbnail&pithumbsize=960&redirects=1&titles=' + encodeURIComponent(faltan.join('|'));
+    const j = await (await fetch(url)).json();
+    const q = j.query || {};
+    const norm = Object.fromEntries((q.normalized||[]).map(n=>[n.from,n.to]));
+    const red = Object.fromEntries((q.redirects||[]).map(n=>[n.from,n.to]));
+    const porTitulo = {};
+    Object.values(q.pages||{}).forEach(p => { if (p.thumbnail) porTitulo[p.title] = p.thumbnail.source; });
+    faltan.forEach(t => { let x = norm[t]||t; x = red[x]||x; if (porTitulo[x]) FOTOS[t] = porTitulo[x]; });
+    try { localStorage.setItem('vm-fotos', JSON.stringify(FOTOS)); } catch(e){}
+    aplicarFotos();
+  } catch(e) { /* sin internet: quedan las siluetas */ }
+}
+function aplicarFotos(){
+  document.querySelectorAll('img[data-wiki]').forEach(img => {
+    const src = FOTOS[img.dataset.wiki];
+    if (src && img.src !== src){ img.onload = () => img.classList.add('ok'); img.src = src; }
+  });
+  document.querySelectorAll('[data-foto]').forEach(box => {
+    const m = MODELOS.find(x=>x.id===box.dataset.foto);
+    const src = m && (m.foto || FOTOS[m.wiki]);
+    if (src && !box.querySelector('img')){
+      const img = new Image(); img.alt = `${m.marca} ${m.nombre}`; img.loading='lazy'; img.decoding='async';
+      img.onerror = () => { box.innerHTML = fallback(m.tipo); };
+      img.onload = () => { box.querySelectorAll('.fallback').forEach(f=>f.remove()); };
+      img.src = src; box.prepend(img);
+    }
+  });
+}
+
+/* ============ catálogo ============ */
+let filtroTipo = 'todos', filtroMarca = null;
+function pintarMarcas(){
+  const marcas = [...new Set(MODELOS.filter(m => filtroTipo==='todos' || (filtroTipo==='verde'?m.verde:m.tipo===filtroTipo)).map(m=>m.marca))];
+  if (filtroMarca && !marcas.includes(filtroMarca)) filtroMarca = null;
+  $('#marcasFil').innerHTML = ['Todas las marcas',...marcas].map((mk,i) =>
+    `<button class="chip" data-marca="${i?esc(mk):''}" aria-pressed="${(i===0&&!filtroMarca)||mk===filtroMarca}">${esc(mk)}</button>`).join('');
+}
+function pintarCatalogo(){
+  const lista = MODELOS.filter(m =>
+    (filtroTipo==='todos' || (filtroTipo==='verde' ? m.verde : m.tipo===filtroTipo)) &&
+    (!filtroMarca || m.marca===filtroMarca));
+  $('#grid').innerHTML = lista.length ? lista.map(m => `
+    <article class="card">
+      <div class="foto" data-foto="${m.id}">${fallback(m.tipo)}${m.etq?`<span class="etq">${esc(m.etq)}</span>`:''}</div>
+      <div class="cuerpo">
+        <span class="mar">${esc(m.marca)}</span>
+        <h3>${esc(m.nombre)}</h3>
+        <span class="tipo">${esc(m.cat)}</span>
+        <div class="precio">${m.precio?'Desde '+pesos(m.precio):'Consultar precio'}<small>${esc(m.pRef)}</small></div>
+        <div class="dato">${esc(m.dato)}</div>
+        <div class="acc">
+          <button class="btn btn-rojo" data-quiero="${m.id}">Lo quiero</button>
+          <button class="btn btn-borde" data-ver="${m.id}">Ver más</button>
+        </div>
+      </div>
+    </article>`).join('') : '<p class="vacio">No hay modelos con ese filtro. Prueba con «Todos».</p>';
+  aplicarFotos();
+}
+document.querySelector('.filtros').addEventListener('click', e => {
+  const b = e.target.closest('[data-tipo]'); if (!b) return;
+  filtroTipo = b.dataset.tipo;
+  document.querySelectorAll('[data-tipo]').forEach(x => x.setAttribute('aria-pressed', x===b));
+  pintarMarcas(); pintarCatalogo();
+});
+$('#marcasFil').addEventListener('click', e => {
+  const b = e.target.closest('[data-marca]'); if (!b) return;
+  filtroMarca = b.dataset.marca || null; pintarMarcas(); pintarCatalogo();
+});
+$('#grid').addEventListener('click', e => {
+  const q = e.target.closest('[data-quiero]'); if (q) return abrirCotizar(q.dataset.quiero);
+  const v = e.target.closest('[data-ver]'); if (v) return abrirDetalle(v.dataset.ver);
+});
+
+/* ============ hoja: detalle y cotización ============ */
+const hoja = $('#hoja'), hojaIn = $('#hojaIn');
+function abrir(html){ hojaIn.innerHTML = html; if (!hoja.open) hoja.showModal(); hojaIn.scrollTop = 0; aplicarFotos(); }
+hoja.addEventListener('click', e => { if (e.target === hoja || e.target.closest('.cerrar')) hoja.close(); });
+const cab = (titulo) => `<div class="hoja-cab"><h3 id="hTit" style="font-size:30px">${titulo}</h3><button class="cerrar" aria-label="Cerrar">×</button></div>`;
+const resumen = m => `<div class="resumen"><div class="mini-foto" data-foto="${m.id}">${fallback(m.tipo)}</div><div><b>${esc(m.marca)} ${esc(m.nombre)}</b><br><span class="nota">${m.precio?'Desde '+pesos(m.precio):'Consultar precio'} · ${esc(CONFIG.marcas[m.marca].red)}</span></div></div>`;
+
+function abrirDetalle(id){
+  const m = MODELOS.find(x=>x.id===id);
+  const busq = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(`${m.marca} ${m.nombre} Colombia reseña 2026`);
+  abrir(cab(`${esc(m.marca)} ${esc(m.nombre)}`) + resumen(m) +
+    `<p><b>${esc(m.cat)}.</b> ${esc(m.dato)}.</p>
+     <p class="nota">${esc(m.pRef)}. El concesionario confirma precio final, bonos, colores y entrega.</p>` +
+    (m.vids||[]).map(v => `<button class="vid" data-yt="${v}" aria-label="Reproducir video"><img src="https://i.ytimg.com/vi/${v}/hqdefault.jpg" alt="" loading="lazy"><span class="play"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></span></button>`).join('') +
+    `<div style="display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 4px">
+      <button class="btn btn-rojo" data-quiero="${m.id}">Lo quiero</button>
+      <a class="btn btn-borde" href="${busq}" target="_blank" rel="noopener">Más videos en YouTube</a>
+      ${m.app?`<a class="btn btn-negro" href="${m.app}" target="_blank" rel="noopener">Abrir su app completa</a>`:''}
+    </div>`);
+}
+hojaIn.addEventListener('click', e => {
+  const q = e.target.closest('[data-quiero]'); if (q) return abrirCotizar(q.dataset.quiero);
+  const y = e.target.closest('[data-yt]'); if (y) reproducir(y);
+});
+
+function abrirCotizar(id){
+  const m = MODELOS.find(x=>x.id===id);
+  const tesla = m.marca === 'Tesla';
+  abrir(cab('Quiero este vehículo') + resumen(m) + `
+    <form id="fCot" novalidate>
+      <div class="campo"><label for="qNom">Tu nombre</label><input type="text" id="qNom" required autocomplete="name"></div>
+      <div class="campo"><label for="qCiu">Ciudad donde lo recibirías</label><input type="text" id="qCiu" required autocomplete="address-level2" placeholder="Ej. Caucasia"></div>
+      <div class="campo"><label for="qCel">Celular</label><input type="tel" id="qCel" required autocomplete="tel" inputmode="tel" placeholder="Ej. 300 123 4567"></div>
+      <div class="campo"><span style="display:block;font-weight:600;margin-bottom:6px">¿Cómo piensas pagar?</span>
+        <div class="pagos">
+          ${['De contado','Con crédito','Entrego mi vehículo en parte de pago','Aún no sé'].map((p,i)=>`<label><input type="radio" name="pago" value="${p}" ${i===1?'checked':''}><span>${p}</span></label>`).join('')}
+        </div></div>
+      <div class="campo"><label for="qNota">Comentario (opcional)</label><input type="text" id="qNota" placeholder="Color, versión, desde el exterior…"></div>
+      <label class="consent"><input type="checkbox" id="qOk" required><span>Autorizo que mis datos se envíen al concesionario de ${esc(m.marca)} y a Vibras Positivas HM solo para atender esta solicitud (Ley 1581 de 2012). La app no guarda tus datos.</span></label>
+      ${tesla?'<p class="nota">Tesla vende directo en su tienda; Harold te acompaña en el proceso de compra.</p>':''}
+      <p class="err" id="qErr" role="alert"></p>
+      <button class="btn btn-wa" type="submit" style="width:100%">Enviar al concesionario por WhatsApp</button>
+    </form>`);
+  $('#fCot').addEventListener('submit', ev => {
+    ev.preventDefault();
+    const d = { nombre:$('#qNom').value.trim(), ciudad:$('#qCiu').value.trim(), cel:$('#qCel').value.trim(),
+                pago:(document.querySelector('input[name=pago]:checked')||{}).value||'Aún no sé', nota:$('#qNota').value.trim() };
+    if (!d.nombre || !d.ciudad || d.cel.replace(/\D/g,'').length < 7) { $('#qErr').textContent = 'Escribe tu nombre, tu ciudad y un celular de al menos 7 números.'; return; }
+    if (!$('#qOk').checked) { $('#qErr').textContent = 'Marca la autorización de datos para poder enviar.'; return; }
+    const cod = codigoReferido(m.marca);
+    const txt = mensajeConcesionario(m, d, cod);
+    window.open(waLink(waDe(m.marca), txt), '_blank', 'noopener');
+    const copia = `📋 *Copia de referido Vibras Motor*\n${txt}`;
+    abrir(cab('Mensaje enviado') + `
+      <p>Tu solicitud salió por WhatsApp hacia ${esc(CONFIG.marcas[m.marca].red)}. Guarda este código: el asesor lo verá en tu mensaje.</p>
+      <div class="codigo">${cod}</div>
+      <p class="nota">Si WhatsApp no se abrió, toca de nuevo:</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn btn-wa" href="${waLink(waDe(m.marca), txt)}" target="_blank" rel="noopener">Abrir WhatsApp otra vez</a>
+        <a class="btn btn-borde" href="${waLink(CONFIG.harold.whatsapp, copia)}" target="_blank" rel="noopener">Avisar también a Harold</a>
+      </div>`);
+  });
+}
+
+function reproducir(btn){
+  if (btn.querySelector('iframe')) return;
+  btn.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${btn.dataset.yt}?autoplay=1&rel=0" title="Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+}
+
+/* ============ demo del mensaje ============ */
+(function(){
+  const m = MODELOS.find(x=>x.id==='corolla-cross');
+  const txt = mensajeConcesionario(m, {nombre:'Luz Marina Pérez', ciudad:'Caucasia', cel:'300 000 0000', pago:'Con crédito', nota:''}, 'VM-TOY-'+horaBogota().codigo+'-4821')
+    .replace(/\*/g,'');
+  $('#burbujaDemo').innerHTML = esc(txt) + `<small>${horaBogota().texto.split(' ')[1]} ✓✓</small>`;
+})();
+
+/* ============ mercado ============ */
+function pintarMercado(k){
+  const M = MERCADO[k], max = M.datos[0][1];
+  $('#barras').innerHTML = M.datos.map(([n,v]) => `<div class="barra"><span>${n}</span><div><div class="b" style="width:${(v/max*100).toFixed(1)}%"></div></div><span class="n">${new Intl.NumberFormat('es-CO').format(v)}</span></div>`).join('');
+  $('#fuenteMer').textContent = M.fuente;
+}
+document.querySelector('.toggle').addEventListener('click', e => {
+  const b = e.target.closest('[data-m]'); if (!b) return;
+  document.querySelectorAll('[data-m]').forEach(x=>x.setAttribute('aria-pressed', x===b));
+  pintarMercado(b.dataset.m);
+});
+
+/* ============ videos ============ */
+$('#vids').innerHTML = VIDEOS.map(v => `<div><button class="vid" data-yt="${v.id}" aria-label="Reproducir: ${esc(v.t)}"><img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy"><span class="play"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></span></button><div class="vid-t">${esc(v.t)}</div></div>`).join('');
+$('#vids').addEventListener('click', e => { const y = e.target.closest('[data-yt]'); if (y) reproducir(y); });
+
+/* ============ calculadora de comisión ============ */
+const cMod = $('#cMod'), cPrecio = $('#cPrecio'), cPct = $('#cPct'), cN = $('#cN');
+cMod.innerHTML = MODELOS.filter(m=>m.precio).map(m=>`<option value="${m.id}">${esc(m.marca)} ${esc(m.nombre)}</option>`).join('');
+cMod.value = 'duster'; cPct.value = CONFIG.comisionEjemplo;
+function calc(){
+  const p = +cPrecio.value || 0, pct = +cPct.value, n = +cN.value;
+  $('#cPctV').textContent = pct.toLocaleString('es-CO') + ' % (ejemplo)';
+  $('#cNV').textContent = n; $('#rN').textContent = n;
+  $('#rUno').textContent = pesos(p*pct/100); $('#rMes').textContent = pesos(p*pct/100*n);
+}
+cMod.addEventListener('change', () => { cPrecio.value = MODELOS.find(m=>m.id===cMod.value).precio; calc(); });
+[cPrecio,cPct,cN].forEach(x => x.addEventListener('input', calc));
+cPrecio.value = MODELOS.find(m=>m.id==='duster').precio; calc();
+
+/* ============ aliados ============ */
+$('#demos').innerHTML = CONFIG.demos.map(d=>`<a class="btn btn-borde btn-sm" href="${d.url}" target="_blank" rel="noopener">${esc(d.t)}</a>`).join('');
+$('#formAliado').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = id => $(id).value.trim();
+  if (!v('#aEmp') || !v('#aMarca') || !v('#aNom') || !v('#aCiu')) { $('#aErr').textContent = 'Completa los cuatro campos para enviar.'; return; }
+  if (!$('#aOk').checked) { $('#aErr').textContent = 'Marca la autorización de datos para poder enviar.'; return; }
+  $('#aErr').textContent = '';
+  const txt = `🤝 *Concesionario interesado en Vibras Motor*\nEmpresa: ${v('#aEmp')}\nMarcas: ${v('#aMarca')}\nContacto: ${v('#aNom')}\nCiudad: ${v('#aCiu')}\nFecha: ${horaBogota().texto}\n\nHola Harold, quiero conocer la propuesta de venta por comisión con tus apps.`;
+  window.open(waLink(CONFIG.harold.whatsapp, txt), '_blank', 'noopener');
+});
+$('#pieWa').href = waLink(CONFIG.harold.whatsapp, 'Hola Harold, vi la app Vibras Motor y quiero más información.');
+$('#fechaAct').textContent = CONFIG.actualizado;
+
+/* ============ barra inferior activa ============ */
+const enlaces = [...document.querySelectorAll('.nav-ab a')];
+const obs = new IntersectionObserver(ents => ents.forEach(en => {
+  if (en.isIntersecting) enlaces.forEach(a => a.classList.toggle('act', a.getAttribute('href') === '#'+en.target.id));
+}), { rootMargin: '-45% 0px -50% 0px' });
+['inicio','como','catalogo','comision','aliados'].forEach(id => obs.observe(document.getElementById(id)));
+
+/* ============ arranque ============ */
+pintarMarcas(); pintarCatalogo(); pintarMercado('carros'); cargarFotos();
+if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>

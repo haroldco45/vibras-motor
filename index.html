@@ -107,6 +107,8 @@ p{margin:0 0 1em;max-width:62ch}
 .card{background:#fff;border:1px solid var(--linea);display:flex;flex-direction:column}
 .card .foto{aspect-ratio:16/10;background:var(--niebla);position:relative;overflow:hidden}
 .card .foto img{width:100%;height:100%;object-fit:cover}
+.card .foto.moto,.mini-foto.moto{background:#fff}
+.card .foto.moto img,.mini-foto.moto img{object-fit:contain;padding:6px}
 .etq{position:absolute;left:0;top:12px;background:var(--rojo);color:#fff;font-size:13px;font-weight:600;padding:4px 10px}
 .card .cuerpo{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
 .card .mar{font-size:14px;color:var(--acero);font-weight:500}
@@ -292,7 +294,7 @@ footer a{color:#fff}
     </div>
     <div class="marcas-fil" id="marcasFil" role="group" aria-label="Marca"></div>
     <div class="grid" id="grid"></div>
-    <p class="credito-foto">Fotos de referencia: Wikimedia Commons, con licencias libres; pueden mostrar otra versión o mercado. Precios de referencia según la fecha indicada en cada modelo: el precio final, los bonos y la disponibilidad los confirma el concesionario.</p>
+    <p class="credito-foto">Fotos de referencia: fichas oficiales de las marcas, Galgo Colombia y Wikimedia Commons; pueden mostrar otra versión o color. Precios de referencia según la fecha indicada en cada modelo: el precio final, los bonos y la disponibilidad los confirma el concesionario.</p>
   </div>
 </section>
 
@@ -393,7 +395,7 @@ footer a{color:#fff}
         <p style="margin-top:10px">Una solución de Vibras Positivas HM. Harold Augusto Marín Machado, Caucasia, Antioquia, Colombia. Atendemos clientes en todo el país y colombianos en el exterior que compran para su familia.</p>
       </div>
       <div><b style="color:#fff">Contacto</b><p style="margin-top:8px"><a id="pieWa" href="#">WhatsApp 311 770 0431</a><br><a href="https://vibraspositivashm.com" rel="noopener">vibraspositivashm.com</a></p></div>
-      <div><b style="color:#fff">Fuentes</b><p style="margin-top:8px">Andemos, ANDI–Fenalco, RUNT. Precios: El Carro Colombiano, Semana, Infobae, Motor, El Espectador, Cambio, Publimotos.</p></div>
+      <div><b style="color:#fff">Fuentes</b><p style="margin-top:8px">Andemos, ANDI–Fenalco, RUNT. Precios: sitios oficiales de AKT y Suzuki, Galgo Colombia, El Carro Colombiano, Semana, Infobae, Motor, Publimotos.</p></div>
     </div>
     <div class="legal">
       Vibras Motor es un canal de referidos independiente: no es concesionario ni representante oficial de las marcas mencionadas, cuyos nombres pertenecen a sus dueños. La venta, la factura y la garantía son del concesionario. Datos personales tratados según la Ley 1581 de 2012; la app no guarda datos de clientes.<br><br>
@@ -462,14 +464,14 @@ const MODELOS = [
   { id:'swift', marca:'Suzuki', nombre:'Swift Híbrido', tipo:'carro', verde:true, cat:'Hatchback híbrido ligero', precio:65990000, pRef:'Desde, versión GL (GLX $77.990.000)', dato:'Suzuki: 1.842 carros vendidos en septiembre, +12 %', etq:'Híbrido', wiki:'Suzuki Swift', app:'https://haroldco45.github.io/suzuki-swift-hibrido/' },
   { id:'hilux', marca:'Toyota', nombre:'Hilux', tipo:'carro', verde:false, cat:'Pick-up 4x4', precio:null, pRef:'Precio con el concesionario', dato:'La pick-up más vendida de septiembre: 417, +50 %', wiki:'Toyota Hilux' },
 
-  { id:'nkd', marca:'AKT', nombre:'NKD 125', tipo:'moto', verde:false, cat:'Urbana 125 cc', precio:5490000, pRef:'Precio de referencia, febrero 2026', dato:'La moto más vendida del país: 7.830 en septiembre', etq:'N.º 1 en motos', wiki:null },
+  { id:'nkd', marca:'AKT', nombre:'NKD 125', tipo:'moto', verde:false, cat:'Urbana 125 cc', precio:5490000, pRef:'Precio de lista AKT, octubre 2026 (con bono: $4.990.000)', dato:'La moto más vendida del país: 7.830 en septiembre', etq:'N.º 1 en motos', wiki:null, foto:'https://images.ctfassets.net/8zlbnewncp6f/01rSgaAajayFwzCldnjEZp/00d2f071726d390729aba334163e5e5c/imagen_principal.jpg?w=900&fm=webp&q=85' },
   { id:'nmax', marca:'Yamaha', nombre:'NMAX 155', tipo:'moto', verde:false, cat:'Scooter automática con ABS', precio:16500000, pRef:'Modelo 2026, precio de referencia', dato:'2.ª más vendida en septiembre: 5.468', wiki:'Yamaha NMAX', vids:['YB7MyLdlEmw'], app:'https://haroldco45.github.io/nmax/' },
-  { id:'boxer', marca:'Bajaj', nombre:'Boxer CT100 ES', tipo:'moto', verde:false, cat:'De trabajo, 100 cc', precio:6100000, pRef:'Precio aproximado, abril 2026', dato:'3.ª más vendida en septiembre: 4.517', wiki:'Bajaj Boxer' },
-  { id:'xr190', marca:'Honda', nombre:'XR190L 2.0', tipo:'moto', verde:false, cat:'Doble propósito 190 cc', precio:null, pRef:'Precio con el concesionario', dato:'4.281 vendidas en septiembre de 2026', wiki:null },
-  { id:'dr150', marca:'Suzuki', nombre:'DR150 ABS', tipo:'moto', verde:false, cat:'Doble propósito 150 cc', precio:null, pRef:'Precio con el concesionario', dato:'3.802 en septiembre, +105 %', wiki:null },
-  { id:'gn125', marca:'Suzuki', nombre:'GN125 ABS', tipo:'moto', verde:false, cat:'Clásica 125 cc', precio:null, pRef:'Precio con el concesionario', dato:'3.745 en septiembre, +173 %', wiki:'Suzuki GN125' },
-  { id:'xr150', marca:'Honda', nombre:'XR150L 2.0', tipo:'moto', verde:false, cat:'Doble propósito 150 cc', precio:null, pRef:'Precio con el concesionario', dato:'3.822 vendidas en septiembre de 2026', wiki:null },
-  { id:'hunk', marca:'Hero', nombre:'Hunk 125R', tipo:'moto', verde:false, cat:'Urbana deportiva 125 cc', precio:null, pRef:'Precio con el concesionario', dato:'Entre las 10 más vendidas de abril de 2026', wiki:null }
+  { id:'boxer', marca:'Bajaj', nombre:'Boxer CT100 ES', tipo:'moto', verde:false, cat:'De trabajo, 100 cc', precio:6199000, pRef:'Precio de referencia, octubre 2026', dato:'3.ª más vendida en septiembre: 4.517', wiki:null, foto:'https://images.ctfassets.net/8zlbnewncp6f/2gUxThd7zCg0DjXa7Dn422/5e442a53fd24fc22daff85faed883438/Bajaj_Boxer_CT100_ES_Boxer_Racing_Galeria1_Galgo.webp?w=900&fm=webp&q=85' },
+  { id:'xr190', marca:'Honda', nombre:'XR190L 2.0', tipo:'moto', verde:false, cat:'Doble propósito 190 cc, ABS', precio:13900000, pRef:'Precio de referencia, octubre 2026', dato:'4.281 vendidas en septiembre de 2026', wiki:null, foto:'https://images.ctfassets.net/8zlbnewncp6f/2WLIWjsYH7i2a0th2trm0V/86a3422ab83a80b5bfda56f1d5fc3565/Honda_XR190L_2.0.png?w=900&fm=webp&q=85' },
+  { id:'dr150', marca:'Suzuki', nombre:'DR150 ABS', tipo:'moto', verde:false, cat:'Doble propósito 150 cc', precio:10990000, pRef:'Precio Suzuki, octubre 2026 (financiada: $10.590.000)', dato:'3.802 en septiembre, +105 %', wiki:null, foto:'https://www.suzuki.com.co/sites/default/files/2025-12/DR-150-GRIS-1385x800.png' },
+  { id:'gn125', marca:'Suzuki', nombre:'GN125 ABS', tipo:'moto', verde:false, cat:'Clásica 125 cc', precio:7419000, pRef:'Precio de referencia, octubre 2026', dato:'3.745 en septiembre, +173 %', wiki:null, foto:'https://images.ctfassets.net/8zlbnewncp6f/3YB8d6tNaQXpigoCvoaOFj/49dac23609157b65d1c822c10485e95c/Suzuki_GN_125_ABS_Galeria1_Galgo_Colombia.png?w=900&fm=webp&q=85' },
+  { id:'xr150', marca:'Honda', nombre:'XR150L 2.0', tipo:'moto', verde:false, cat:'Doble propósito 150 cc, ABS', precio:10590000, pRef:'Precio de referencia, octubre 2026', dato:'3.822 vendidas en septiembre de 2026', wiki:null, foto:'https://images.ctfassets.net/8zlbnewncp6f/17UzCxFW2ZNqQQqD6AyIpS/6fa2cca5ea6cf1b3fb2ad1bbb549bd0f/Imagen_principal__24_.png?w=900&fm=webp&q=85' },
+  { id:'hunk', marca:'Hero', nombre:'Hunk 125R', tipo:'moto', verde:false, cat:'Urbana deportiva 125 cc', precio:7790000, pRef:'Precio de referencia, octubre 2026', dato:'Entre las 10 más vendidas de abril de 2026', wiki:null, foto:'https://images.ctfassets.net/8zlbnewncp6f/58pef59rBgOHOh5MwJ1rG4/baf4cf8b31d034364b27bacf7fbbc6af/hunk125R-Red.png?w=900&fm=webp&q=85' }
 ];
 
 const MERCADO = {
@@ -571,7 +573,7 @@ function pintarCatalogo(){
     (!filtroMarca || m.marca===filtroMarca));
   $('#grid').innerHTML = lista.length ? lista.map(m => `
     <article class="card">
-      <div class="foto" data-foto="${m.id}">${fallback(m.tipo)}${m.etq?`<span class="etq">${esc(m.etq)}</span>`:''}</div>
+      <div class="foto ${m.tipo}" data-foto="${m.id}">${fallback(m.tipo)}${m.etq?`<span class="etq">${esc(m.etq)}</span>`:''}</div>
       <div class="cuerpo">
         <span class="mar">${esc(m.marca)}</span>
         <h3>${esc(m.nombre)}</h3>
@@ -606,7 +608,7 @@ const hoja = $('#hoja'), hojaIn = $('#hojaIn');
 function abrir(html){ hojaIn.innerHTML = html; if (!hoja.open) hoja.showModal(); hojaIn.scrollTop = 0; aplicarFotos(); }
 hoja.addEventListener('click', e => { if (e.target === hoja || e.target.closest('.cerrar')) hoja.close(); });
 const cab = (titulo) => `<div class="hoja-cab"><h3 id="hTit" style="font-size:30px">${titulo}</h3><button class="cerrar" aria-label="Cerrar">×</button></div>`;
-const resumen = m => `<div class="resumen"><div class="mini-foto" data-foto="${m.id}">${fallback(m.tipo)}</div><div><b>${esc(m.marca)} ${esc(m.nombre)}</b><br><span class="nota">${m.precio?'Desde '+pesos(m.precio):'Consultar precio'} · ${esc(CONFIG.marcas[m.marca].red)}</span></div></div>`;
+const resumen = m => `<div class="resumen"><div class="mini-foto ${m.tipo}" data-foto="${m.id}">${fallback(m.tipo)}</div><div><b>${esc(m.marca)} ${esc(m.nombre)}</b><br><span class="nota">${m.precio?'Desde '+pesos(m.precio):'Consultar precio'} · ${esc(CONFIG.marcas[m.marca].red)}</span></div></div>`;
 
 function abrirDetalle(id){
   const m = MODELOS.find(x=>x.id===id);

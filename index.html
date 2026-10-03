@@ -165,6 +165,12 @@ p{margin:0 0 1em;max-width:62ch}
 .prop div{border-top:2px solid #000;padding-top:14px}
 .prop p{font-size:16px;color:var(--acero)}
 .demos{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
+.sello{display:inline-flex;align-items:center;gap:6px;background:#000;color:#fff;font-size:13px;font-weight:600;padding:5px 10px 5px 8px;border-radius:999px;margin:4px 0 2px;line-height:1.2}
+.sello svg{color:var(--rojo);flex:none}
+.ficha-aliado{border:2px solid #000;padding:12px 14px;margin-bottom:16px}
+.aliados-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:18px}
+.aliado{background:#fff;border:1px solid var(--linea);border-top:4px solid var(--rojo);padding:18px}
+.aliado.libre{border:2px dashed #9a9a9a;background:transparent}
 .form-aliado{max-width:620px;margin-top:44px;background:#fff;padding:28px;border:1px solid var(--linea)}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--acero);margin:6px 0 18px}
 .consent input{margin-top:4px;accent-color:var(--rojo);width:18px;height:18px;flex:none}
@@ -369,6 +375,9 @@ footer a{color:#fff}
       <div><h3>Una app por modelo</h3><p>Hago apps estilo Toyota para el modelo que usted elija: versiones, ficha técnica, simulador de cuota y prueba de manejo por WhatsApp.</p></div>
       <div><h3>Comisión por venta cerrada</h3><p>Usted no arriesga nada. Si el cliente con mi código compra, me paga la comisión pactada. Si no compra, no me debe nada.</p></div>
     </div>
+    <h3 style="margin-top:44px;font-size:30px">Concesionarios aliados</h3>
+    <p class="nota" style="margin-top:6px">Los concesionarios que ya venden con Vibras Motor. Sus modelos llevan su nombre y los clientes les escriben directo.</p>
+    <div class="aliados-grid" id="aliadosGrid"></div>
     <p style="margin-top:30px"><b>Ejemplos de apps que ya hice:</b></p>
     <div class="demos" id="demos"></div>
 
@@ -441,6 +450,14 @@ const CONFIG = {
     'Honda':     { red: 'Fanalca (Honda motos) y su red de concesionarios', whatsapp: '' },
     'Hero':      { red: 'Hero MotoCorp Colombia y sus concesionarios', whatsapp: '' }
   },
+  /* CONCESIONARIOS ALIADOS: cuando uno firme, agréguelo aquí y sus modelos
+     pasan a mostrar su nombre, su ciudad y su asesor, y los clientes le escriben directo.
+     Ejemplo (quite las barras // para activarlo con datos reales):
+     { marca:'Suzuki', nombre:'Nombre del concesionario', ciudad:'Montería', direccion:'Calle 00 # 00-00',
+       asesor:'Nombre del asesor', whatsapp:'573000000000', horario:'Lun a sáb, 8 a. m. a 6 p. m.', desde:'octubre 2026' } */
+  aliados: [
+    // { marca:'Suzuki', nombre:'...', ciudad:'...', direccion:'...', asesor:'...', whatsapp:'57...', horario:'...', desde:'...' },
+  ],
   demos: [
     { t: 'Toyota bZ3X eléctrica', url: 'https://haroldco45.github.io/toyota-bz3x/' },
     { t: 'Suzuki Swift Híbrido', url: 'https://haroldco45.github.io/suzuki-swift-hibrido/' },
@@ -512,11 +529,19 @@ function codigoReferido(marca){
   const n = crypto.getRandomValues(new Uint16Array(1))[0] % 9000 + 1000;
   return `VM-${pref}-${horaBogota().codigo}-${n}`;
 }
-const waDe = marca => (CONFIG.marcas[marca] && CONFIG.marcas[marca].whatsapp) || CONFIG.harold.whatsapp;
+const aliadoDe = marca => (CONFIG.aliados || []).find(a => a.marca === marca && a.whatsapp);
+const waDe = marca => (aliadoDe(marca) || {}).whatsapp || (CONFIG.marcas[marca] && CONFIG.marcas[marca].whatsapp) || CONFIG.harold.whatsapp;
+const redDe = marca => { const a = aliadoDe(marca); return a ? `${a.nombre}, ${a.ciudad}` : CONFIG.marcas[marca].red; };
+const sello = a => `<div class="sello"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-10"/></svg>Concesionario aliado: ${esc(a.nombre)}, ${esc(a.ciudad)}</div>`;
+const fichaAliado = a => `<div class="ficha-aliado">${sello(a)}
+  <p style="margin:10px 0 4px"><b>Te atiende ${esc(a.asesor)}</b></p>
+  <p class="nota" style="margin:0">${a.direccion?esc(a.direccion)+'. ':''}${a.horario?esc(a.horario)+'.':''}</p></div>`;
 const waLink = (num, txt) => `https://wa.me/${num}?text=${encodeURIComponent(txt)}`;
 
 function mensajeConcesionario(m, d, cod){
-  return `🚗 *Cliente referido por Vibras Motor*\n` +
+  const a = aliadoDe(m.marca);
+  return (a ? `Hola ${a.asesor} 👋\n` : '') + `🚗 *Cliente referido por Vibras Motor*\n` +
+    (a ? `Concesionario: ${a.nombre}, ${a.ciudad}\n` : '') +
     `Código de referido: *${cod}*\n\n` +
     `Vehículo: ${m.marca} ${m.nombre}\n` +
     `Cliente: ${d.nombre}\nCiudad: ${d.ciudad}\nCelular: ${d.cel}\nForma de pago: ${d.pago}\n` +
@@ -580,7 +605,7 @@ function pintarCatalogo(){
     <article class="card">
       <div class="foto ${m.tipo}" data-foto="${m.id}">${fallback(m.tipo)}${m.etq?`<span class="etq">${esc(m.etq)}</span>`:''}</div>
       <div class="cuerpo">
-        <span class="mar">${esc(m.marca)}</span>
+        <span class="mar">${esc(m.marca)}</span>${aliadoDe(m.marca)?sello(aliadoDe(m.marca)):''}
         <h3>${esc(m.nombre)}</h3>
         <span class="tipo">${esc(m.cat)}</span>
         <div class="precio">${m.precio?'Desde '+pesos(m.precio):'Consultar precio'}<small>${esc(m.pRef)}</small></div>
@@ -613,12 +638,12 @@ const hoja = $('#hoja'), hojaIn = $('#hojaIn');
 function abrir(html){ hojaIn.innerHTML = html; if (!hoja.open) hoja.showModal(); hojaIn.scrollTop = 0; aplicarFotos(); }
 hoja.addEventListener('click', e => { if (e.target === hoja || e.target.closest('.cerrar')) hoja.close(); });
 const cab = (titulo) => `<div class="hoja-cab"><h3 id="hTit" style="font-size:30px">${titulo}</h3><button class="cerrar" aria-label="Cerrar">×</button></div>`;
-const resumen = m => `<div class="resumen"><div class="mini-foto ${m.tipo}" data-foto="${m.id}">${fallback(m.tipo)}</div><div><b>${esc(m.marca)} ${esc(m.nombre)}</b><br><span class="nota">${m.precio?'Desde '+pesos(m.precio):'Consultar precio'} · ${esc(CONFIG.marcas[m.marca].red)}</span></div></div>`;
+const resumen = m => `<div class="resumen"><div class="mini-foto ${m.tipo}" data-foto="${m.id}">${fallback(m.tipo)}</div><div><b>${esc(m.marca)} ${esc(m.nombre)}</b><br><span class="nota">${m.precio?'Desde '+pesos(m.precio):'Consultar precio'} · ${esc(redDe(m.marca))}</span></div></div>`;
 
 function abrirDetalle(id){
   const m = MODELOS.find(x=>x.id===id);
   const busq = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(`${m.marca} ${m.nombre} Colombia reseña 2026`);
-  abrir(cab(`${esc(m.marca)} ${esc(m.nombre)}`) + resumen(m) +
+  abrir(cab(`${esc(m.marca)} ${esc(m.nombre)}`) + resumen(m) + (aliadoDe(m.marca)?fichaAliado(aliadoDe(m.marca)):'') +
     `<p><b>${esc(m.cat)}.</b> ${esc(m.dato)}.</p>
      <p class="nota">${esc(m.pRef)}. El concesionario confirma precio final, bonos, colores y entrega.</p>` +
     (m.vids||[]).map(v => `<button class="vid" data-yt="${v}" aria-label="Reproducir video"><img src="https://i.ytimg.com/vi/${v}/hqdefault.jpg" alt="" loading="lazy"><span class="play"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></span></button>`).join('') +
@@ -646,7 +671,7 @@ function abrirCotizar(id){
           ${['De contado','Con crédito','Entrego mi vehículo en parte de pago','Aún no sé'].map((p,i)=>`<label><input type="radio" name="pago" value="${p}" ${i===1?'checked':''}><span>${p}</span></label>`).join('')}
         </div></div>
       <div class="campo"><label for="qNota">Comentario (opcional)</label><input type="text" id="qNota" placeholder="Color, versión, desde el exterior…"></div>
-      <label class="consent"><input type="checkbox" id="qOk" required><span>Autorizo que mis datos se envíen al concesionario de ${esc(m.marca)} y a Vibras Positivas HM solo para atender esta solicitud (Ley 1581 de 2012). La app no guarda tus datos.</span></label>
+      <label class="consent"><input type="checkbox" id="qOk" required><span>Autorizo que mis datos se envíen a ${aliadoDe(m.marca)?esc(aliadoDe(m.marca).nombre):'el concesionario de '+esc(m.marca)} y a Vibras Positivas HM solo para atender esta solicitud (Ley 1581 de 2012). La app no guarda tus datos.</span></label>
       ${tesla?'<p class="nota">Tesla vende directo en su tienda; Harold te acompaña en el proceso de compra.</p>':''}
       <p class="err" id="qErr" role="alert"></p>
       <button class="btn btn-wa" type="submit" style="width:100%">Enviar al concesionario por WhatsApp</button>
@@ -662,7 +687,7 @@ function abrirCotizar(id){
     window.open(waLink(waDe(m.marca), txt), '_blank', 'noopener');
     const copia = `📋 *Copia de referido Vibras Motor*\n${txt}`;
     abrir(cab('Mensaje enviado') + `
-      <p>Tu solicitud salió por WhatsApp hacia ${esc(CONFIG.marcas[m.marca].red)}. Guarda este código: el asesor lo verá en tu mensaje.</p>
+      <p>Tu solicitud salió por WhatsApp hacia ${aliadoDe(m.marca)?esc(aliadoDe(m.marca).asesor)+' en ':''}${esc(redDe(m.marca))}. Guarda este código: el asesor lo verá en tu mensaje.</p>
       <div class="codigo">${cod}</div>
       <p class="nota">Si WhatsApp no se abrió, toca de nuevo:</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -716,6 +741,32 @@ cMod.addEventListener('change', () => { cPrecio.value = MODELOS.find(m=>m.id===c
 cPrecio.value = MODELOS.find(m=>m.id==='duster').precio; calc();
 
 /* ============ aliados ============ */
+function pintarAliados(){
+  const al = (CONFIG.aliados || []).filter(a => a.whatsapp);
+  const libres = Object.keys(CONFIG.marcas).filter(mk => !aliadoDe(mk));
+  $('#aliadosGrid').innerHTML = al.map(a => `
+    <div class="aliado">
+      <div class="sello"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-10"/></svg>Aliado oficial</div>
+      <h3 style="margin-top:10px">${esc(a.nombre)}</h3>
+      <p class="nota" style="margin:2px 0 10px">${esc(a.marca)} · ${esc(a.ciudad)}${a.desde?' · Aliado desde '+esc(a.desde):''}</p>
+      <p style="font-size:15px;margin:0 0 4px">Asesor: <b>${esc(a.asesor)}</b></p>
+      ${a.direccion?`<p class="nota" style="margin:0">${esc(a.direccion)}</p>`:''}
+      ${a.horario?`<p class="nota" style="margin:0 0 14px">${esc(a.horario)}</p>`:''}
+      <button class="btn btn-borde btn-sm" data-vermarca="${esc(a.marca)}">Ver sus modelos</button>
+    </div>`).join('') + (libres.length ? `
+    <div class="aliado libre">
+      <h3>Su concesionario aquí</h3>
+      <p class="nota" style="margin:6px 0 12px">Puesto disponible para: ${libres.map(esc).join(', ')}.</p>
+      <a class="btn btn-rojo btn-sm" href="#formAliado">Quiero este puesto</a>
+    </div>` : '');
+}
+$('#aliadosGrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-vermarca]'); if (!b) return;
+  filtroTipo = 'todos'; filtroMarca = b.dataset.vermarca;
+  document.querySelectorAll('[data-tipo]').forEach(x => x.setAttribute('aria-pressed', x.dataset.tipo==='todos'));
+  pintarMarcas(); pintarCatalogo(); document.getElementById('catalogo').scrollIntoView();
+});
+pintarAliados();
 $('#demos').innerHTML = CONFIG.demos.map(d=>`<a class="btn btn-borde btn-sm" href="${d.url}" target="_blank" rel="noopener">${esc(d.t)}</a>`).join('');
 $('#formAliado').addEventListener('submit', e => {
   e.preventDefault();
